@@ -12,16 +12,10 @@ module.exports = (creds, subIdDefault) => {
   if (!creds) {
     throw Error('Credentials was not passed')
   }
-  try {
-    return {
-      getResourcegroups: (subscriptionId = subIdDefault) => getResourcegroups(creds, subscriptionId),
-      getNamespaces: (subscriptionId = subIdDefault) => getNamespaces(creds, subscriptionId),
-      getQueues: (subscriptionId = subIdDefault, namespaces) => getQueues(creds, subscriptionId, namespaces),
-      getMessages: (subscriptionId = subIdDefault, idString, getStandardQueue) => getMessages(creds, subscriptionId, idString, getStandardQueue)
-    }
-    
-  } catch (error) {
-    throw error
+  return {
+    getResourcegroups: (subscriptionId = subIdDefault) => getResourcegroups(creds, subscriptionId),
+    getNamespaces: (subscriptionId = subIdDefault) => getNamespaces(creds, subscriptionId),
+    getQueues: (subscriptionId = subIdDefault, namespaces) => getQueues(creds, subscriptionId, namespaces),
+    getMessages: (subscriptionId = subIdDefault, idString, getStandardQueue) => getMessages(creds, subscriptionId, idString, getStandardQueue)
   }
-
 }

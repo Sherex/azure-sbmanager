@@ -4,24 +4,19 @@
  * @returns {Object} Contains whatever resources that´s specified in the ID
  */
 module.exports = (idString) => {
-  const resGroupRegEx = new RegExp(
-    ['(?:.*resourceGroups\/(?<resGroup>[^\/]*))?',
-    '(?:.*namespaces\/(?<namespace>[^\/]*))?',
-    '(?:.*queues\/(?<queue>[^\/]*))?'].join('')
-  )
-
-  try {
-    let result = resGroupRegEx.exec(idString).groups
-    // Cleaner output
-    let resources = {}
-    for ( group in result ) {
-      if (result[group]) {
-        resources[group] = result[group]
-      }
+  const resGroupRegEx = new RegExp(/(?:.*resourceGroups\/(?<resGroup>[^/]*))?(?:.*namespaces\/(?<namespace>[^/]*))?(?:.*queues\/(?<queue>[^/]*))?/)
+  const result = resGroupRegEx.exec(idString).groups
+  // Cleaner output
+  const resources = {}
+  for (const group in result) {
+    if (result[group]) {
+      resources[group] = result[group]
     }
-    result.resGroup ? resources.resGroup = result.resGroup : null
-    return resources
-  } catch (error) {
-    throw error
   }
+
+  if (result.resGroup) {
+    resources.resGroup = result.resGroup
+  }
+
+  return resources
 }
